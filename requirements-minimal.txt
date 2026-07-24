@@ -24,3 +24,8 @@ aiohttp>=3.13.5
 
 # Monitoring
 psutil>=5.9.0
+
+# Flashing tools
+esptool>=5.3.1
+pyserial>=3.5.0
+esp_idf_nvs_partition_gen>=0.3.0
