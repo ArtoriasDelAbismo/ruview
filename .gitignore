@@ -1,2 +1,4 @@
 core/
 venv/
+nvs_config.csv
+nvs.bin
