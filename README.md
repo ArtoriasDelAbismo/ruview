@@ -71,6 +71,15 @@ use the WiFi/Ethernet adapter's address, not the `vEthernet (WSL)` one). Without
 this allowlist, the server rejects any request whose `Host` header isn't
 localhost with "Host header not in allowlist (DNS-rebinding defense)".
 
+**If `docker run` fails with `Bind for 0.0.0.0:5005 failed: port is already
+allocated`:** a container from an earlier run is still up and holding that
+port (env vars like `SENSING_ALLOWED_HOSTS` require a restart to apply, so
+it's easy to forget one is still running). Find and stop it, then re-run:
+```bash
+docker ps
+docker stop <container name or id>
+```
+
 ### If running native Docker inside WSL2 (not Docker Desktop): forward the ports to Windows
 
 Check which one you have:
@@ -98,6 +107,14 @@ powershell -ExecutionPolicy Bypass -File \\wsl.localhost\<distro>\path\to\ruview
 ```
 Replace `<distro>` with your WSL distro name (`wsl -l` to check) and the path
 with your actual checkout location.
+
+**If either script fails with `Could not determine WSL2 IP` and a garbled
+hex dump:** this is `wsl.exe`'s UTF-16LE stdout getting mis-decoded by
+PowerShell (mojibake) — it can happen inconsistently depending on console
+codepage/elevation/how the script was invoked. Both scripts set
+`$env:WSL_UTF8 = "1"` before calling `wsl hostname -I`, which tells `wsl.exe`
+to emit plain UTF-8 instead and avoids this. If you're running an older copy
+of these scripts without that line, re-pull/update them.
 
 
 ## 2. Once the firmware is flashed proceed with provisioning
