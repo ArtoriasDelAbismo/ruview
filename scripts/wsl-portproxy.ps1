@@ -22,16 +22,13 @@ $ports = @(
     @{ Port = 3001; Protocol = "tcp" }
 )
 
-# wsl.exe writes UTF-16LE to stdout; on non-English Windows the console's
-# default OEM codepage decodes that as garbage/invisible characters when
-# captured into a variable. Force Unicode decoding just for this call.
-$prevEncoding = [Console]::OutputEncoding
-[Console]::OutputEncoding = [System.Text.Encoding]::Unicode
-try {
-    $wslRaw = (wsl hostname -I) -join " "
-} finally {
-    [Console]::OutputEncoding = $prevEncoding
-}
+# wsl.exe defaults to UTF-16LE stdout, which gets mis-decoded (mojibake) by
+# PowerShell depending on console codepage/elevation/invocation context -
+# fiddling with [Console]::OutputEncoding is not reliable across all of
+# those. WSL_UTF8=1 tells wsl.exe itself to emit plain UTF-8 instead,
+# sidestepping the guessing game entirely.
+$env:WSL_UTF8 = "1"
+$wslRaw = (wsl hostname -I) -join " "
 $wslIp = [regex]::Match($wslRaw, '\d{1,3}(\.\d{1,3}){3}').Value
 if (-not $wslIp) {
     
