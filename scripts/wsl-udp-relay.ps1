@@ -12,6 +12,10 @@ Requires the "WSL2 RuView udp 5005" inbound firewall rule created by
 wsl-portproxy.ps1's first run. Does not require Administrator.
 #>
 
+# See wsl-portproxy.ps1 for why WSL_UTF8=1 is needed: wsl.exe's default
+# UTF-16LE stdout gets mis-decoded by PowerShell depending on console
+# codepage/elevation/invocation context.
+$env:WSL_UTF8 = "1"
 $wslRaw = (wsl hostname -I) -join " "
 $wslIp = [regex]::Match($wslRaw, '\d{1,3}(\.\d{1,3}){3}').Value
 if (-not $wslIp) {
