@@ -1,8 +1,13 @@
 
-## To create a venv use:
+## To create a venv in wsl use:
 ```bash
     python3 -m venv venv && source venv/bin/activate
 ```
+
+## To create a venv in powershell use:
+  ```bash
+    python -m venv venv; venv\Scripts\Activate.ps1
+  ```
 
 ## To install requirements run:
 ```bash
