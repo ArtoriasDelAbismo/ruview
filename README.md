@@ -14,6 +14,15 @@
     pip install -r requirements-minimal.txt
 ```
 
+## To initialize environment on powershell:
+```bash
+  venv\Scripts\Activate.ps1
+``` 
+## To initialize environment on Debian based os:
+```bash
+  source venv/bin/activate
+```
+
 ## Share USB from Windows to Linux 
 - Install usbipd tool in powershell 
 Run as admin:
