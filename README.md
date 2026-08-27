@@ -1,26 +1,29 @@
+## Environment setup
 
-## To create a venv in wsl use:
-```bash
-    python3 -m venv venv && source venv/bin/activate
+### Windows (PowerShell)
+```powershell
+# create (first time only)
+python -m venv venv
+
+# activate (every new shell)
+venv\Scripts\Activate.ps1
+# if you get an execution-policy error, run this first in the same shell:
+#   Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+
+# install requirements
+pip install -r requirements-minimal.txt
 ```
 
-## To create a venv in powershell use:
-  ```bash
-    python -m venv venv; venv\Scripts\Activate.ps1
-  ```
+### Linux / WSL (Debian based)
+```bash
+# create (first time only)
+python3 -m venv venv
 
-## To install requirements run:
-```bash
-    pip install -r requirements-minimal.txt
-```
+# activate (every new shell)
+source venv/bin/activate
 
-## To initialize environment on powershell:
-```bash
-  venv\Scripts\Activate.ps1
-``` 
-## To initialize environment on Debian based os:
-```bash
-  source venv/bin/activate
+# install requirements
+pip install -r requirements-minimal.txt
 ```
 
 ## Share USB from Windows to Linux 
