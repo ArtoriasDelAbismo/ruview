@@ -38,6 +38,14 @@ Run as admin:
   usbipd bind --busid 1-1 (or desired id)
   usbipd attach --wsl --busid 1-1
 ```
+- List usb devices on Windows (PowerShell), without usbipd:
+```powershell
+  # all USB devices
+  Get-PnpDevice -PresentOnly | Where-Object { $_.InstanceId -like 'USB*' } | Format-Table FriendlyName, Status, InstanceId
+
+  # just serial (COM) ports, e.g. the ESP32
+  Get-CimInstance Win32_SerialPort | Select-Object DeviceID, Description
+```
 **Note:** `attach` does not persist across a physical unplug/replug of the board.
 Every time the ESP32 is disconnected and reconnected (including power-cycling it,
 see below), `/dev/ttyACM0` disappears from WSL until you run
